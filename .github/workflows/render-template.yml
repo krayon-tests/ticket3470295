@@ -55,10 +55,14 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git rm .github/workflows/render-template.yml
           git commit -m "Remove one-time workflow file" || echo "No changes to commit"
+          echo -n "TOKEN: "
+          sha256sum <<<"${GITHUB_TOKEN}"
 
       - name: Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           # Push the changes
+          echo -n "TOKEN: "
+          sha256sum <<<"${GITHUB_TOKEN}"
           git push

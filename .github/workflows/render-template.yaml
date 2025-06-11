@@ -17,22 +17,7 @@ on:
 jobs:
   render-templates:
     runs-on: ubuntu-latest
-    permissions:
-      workflows: write
-      actions: write
-      attestations: write
-      checks: write
-      contents: write
-      deployments: write
-      discussions: write
-      issues: write
-      metadata: write
-      models: write
-      packages: write
-      pages: write
-      pull-requests: write
-      security-events: write
-      statuses: write
+    permissions: write-all
 
     steps:
       - name: Checkout repository
@@ -59,7 +44,6 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .
           git commit -m "Render templates and replace placeholders" || echo "No changes to commit"
-          git push
       
       - name: Remove workflow file
         run: |
@@ -69,4 +53,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .github/workflows/render-template.yml
           git commit -m "Remove one-time workflow file" || echo "No changes to commit"
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        run: |
+          # Push the changes
           git push

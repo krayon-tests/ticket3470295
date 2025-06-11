@@ -37,6 +37,7 @@ jobs:
         run: |
           cd .github/workflows
           python render.py
+          cd -
       
       - name: Commit changes
         run: |
@@ -48,10 +49,9 @@ jobs:
       - name: Remove workflow file
         run: |
           # Remove the workflow file itself
-          rm -f .github/workflows/render-template.yml
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .github/workflows/render-template.yml
+          git rm .github/workflows/render-template.yml
           git commit -m "Remove one-time workflow file" || echo "No changes to commit"
 
       - name: Push changes

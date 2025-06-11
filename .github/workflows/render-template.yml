@@ -18,6 +18,8 @@ jobs:
   render-templates:
     runs-on: ubuntu-latest
     permissions: write-all
+    env:
+      GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -59,8 +61,6 @@ jobs:
           sha256sum <<<"${GITHUB_TOKEN}"
 
       - name: Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           # Push the changes
           echo -n "TOKEN: "

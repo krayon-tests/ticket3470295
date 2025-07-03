@@ -26,42 +26,42 @@ steps:
 This then allows the workflow to:
 
   1. Modify the repository contents:
-
-    ```yaml
-    - name: Run template rendering script
-      run: |
-        cd .github/workflows
-        python render.py
-        cd -
-    
-    - name: Commit changes
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add .
-        git commit -m "Render templates and replace placeholders" || echo "No changes to commit"
-    ```
+      
+      ```yaml
+      - name: Run template rendering script
+        run: |
+          cd .github/workflows
+          python render.py
+          cd -
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Render templates and replace placeholders" || echo "No changes to commit"
+      ```
   
   2. Remove itself:
-
-    ```yaml
-    - name: Remove workflow file
-      run: |
-        # Remove the workflow file itself
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git rm .github/workflows/render-template.yml .github/workflows/render.py
-        git commit -m "Remove one-time workflow file" || echo "No changes to commit"
-    ```
+      
+      ```yaml
+      - name: Remove workflow file
+        run: |
+          # Remove the workflow file itself
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git rm .github/workflows/render-template.yml .github/workflows/render.py
+          git commit -m "Remove one-time workflow file" || echo "No changes to commit"
+      ```
   
   3. Push the changes to the (current or new) repository:
-
-    ```yaml
-    - name: Push changes
-      run: |
-        # Push the changes
-        git push
-    ```
+      
+      ```yaml
+      - name: Push changes
+        run: |
+          # Push the changes
+          git push
+      ```
 
 In this example, we are choosing to only trigger on repository creation:
 

@@ -27,13 +27,13 @@ This then allows the workflow to:
 
   1. Modify the repository contents:
 
-    ````
+    ```yaml
     - name: Run template rendering script
       run: |
         cd .github/workflows
         python render.py
         cd -
-  
+    
     - name: Commit changes
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -43,7 +43,8 @@ This then allows the workflow to:
     ```
   
   2. Remove itself:
-    ```
+
+    ```yaml
     - name: Remove workflow file
       run: |
         # Remove the workflow file itself
@@ -54,12 +55,33 @@ This then allows the workflow to:
     ```
   
   3. Push the changes to the (current or new) repository:
-    ```
+
+    ```yaml
     - name: Push changes
       run: |
         # Push the changes
         git push
     ```
+
+In this example, we are choosing to only trigger on repository creation:
+
+  ```yaml
+  repository_dispatch:
+    # This allows triggering via repo creation webhook if configured
+    types: [repository-created]
+  ```
+
+And only modify repositories that are _based_ off this template, not the
+template itself:
+
+  ```yaml
+  render-templates:
+    ## Only run on repositories who's names don't end in '-template'
+    #if: ${{ ! endsWith(github.repository, '-template') }}
+
+    # Only run if this isn't a template rpeository
+    if: ${{ ! github.event.repository.is_template }}
+  ```
 
 ----
 [//]: # ( vim: set ts=4 sw=4 et cindent tw=80 ai si syn=markdown ft=markdown: )

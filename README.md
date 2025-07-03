@@ -5,7 +5,7 @@ This repository tests the idea of having a template that is capable of modifying
 To utilise this functionality, one needs to:
 
   1. Create a token (such as a Personal Access Token (PAT)) that has access to the Organization, and has the repository permissions:
-
+    
     - READ `metadata`
     - READ/WRITE `code`
     - READ/WRITE `workflows`

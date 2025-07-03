@@ -13,15 +13,15 @@ To utilise this functionality, one needs to:
 In this repository, the token is in an Organization secret called `WORKFLOW_TOKEN`.
 
 This overrides the `GITHUB_TOKEN` in the checkout process:
-
-```yaml
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v3
-    # This will override the GITHUB_TOKEN (it's stored in .git so using 'env:' won't work?)
-    with:
-      token: ${{ secrets.WORKFLOW_TOKEN }}
-```
+    
+    ```yaml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        # This will override the GITHUB_TOKEN (it's stored in .git so using 'env:' won't work?)
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+    ```
 
 This then allows the workflow to:
 
@@ -64,24 +64,24 @@ This then allows the workflow to:
       ```
 
 In this example, we are choosing to only trigger on repository creation:
-
-  ```yaml
-  repository_dispatch:
-    # This allows triggering via repo creation webhook if configured
-    types: [repository-created]
-  ```
+    
+    ```yaml
+    repository_dispatch:
+      # This allows triggering via repo creation webhook if configured
+      types: [repository-created]
+    ```
 
 And only modify repositories that are _based_ off this template, not the
 template itself:
-
-  ```yaml
-  render-templates:
-    ## Only run on repositories who's names don't end in '-template'
-    #if: ${{ ! endsWith(github.repository, '-template') }}
-
-    # Only run if this isn't a template rpeository
-    if: ${{ ! github.event.repository.is_template }}
-  ```
+    
+    ```yaml
+    render-templates:
+      ## Only run on repositories who's names don't end in '-template'
+      #if: ${{ ! endsWith(github.repository, '-template') }}
+  
+      # Only run if this isn't a template rpeository
+      if: ${{ ! github.event.repository.is_template }}
+    ```
 
 ----
 [//]: # ( vim: set ts=4 sw=4 et cindent tw=80 ai si syn=markdown ft=markdown: )

@@ -1,5 +1,7 @@
 # ticket3470295
 
+## Setup
+
 This repository tests the idea of having a template that is capable of modifying the Actions workflows of itself, and repositories created from it.
 
 To utilise this functionality, one needs to:
@@ -13,6 +15,8 @@ To utilise this functionality, one needs to:
   2. Place the token in the Organization (or Repository) secrets;
 
 In this repository, the token is in an Organization secret called `WORKFLOW_TOKEN`.
+
+## Workflow
 
 This overrides the `GITHUB_TOKEN` in the checkout process:
   
@@ -84,6 +88,12 @@ template itself:
     # Only run if this isn't a template rpeository
     if: ${{ ! github.event.repository.is_template }}
   ```
+
+## Result
+
+The
+[`ticket3470295-repo2` repository](https://github.com/krayon-tests/ticket3470295-repo2)
+was created off this template and shows the result.
 
 ----
 [//]: # ( vim: set ts=4 sw=4 et cindent tw=80 ai si syn=markdown ft=markdown: )
